@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AdaptiveRPG.NoManaRPG;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -18,6 +19,8 @@ namespace MonoGamePlayground
 
         protected override void Initialize()
         {
+
+
             // TODO: Add your initialization logic here
 
             base.Initialize();
