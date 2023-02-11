@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Combat\Systems\" />
     <Folder Include="Narrative\Systems\" />
-    <Folder Include="Systems\" />
   </ItemGroup>
 
 </Project>
