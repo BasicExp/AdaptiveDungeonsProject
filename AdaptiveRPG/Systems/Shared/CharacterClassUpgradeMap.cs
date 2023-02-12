@@ -1,6 +1,6 @@
 ﻿using AdaptiveRPG.Character.Components.CharacterClasses;
 
-namespace AdaptiveRPG.Character.Systems.Shared
+namespace AdaptiveRPG.Systems.Shared
 {
     /// <summary>
     /// Used to define upgrade paths for classes in relation to one another generically, with no knowledge

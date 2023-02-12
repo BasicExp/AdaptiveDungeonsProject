@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfCharacterSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CharacterSystem>
-    <Character>
-      <Name>Character1</Name>
-      <Description>Character description here</Description>
+<NoManaSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <CharacterSystems>
+    <CharacterSystem>
+      <Character>
+        <Name>Character1</Name>
+        <Description>Character description here</Description>
+      </Character>
+      <Leveling>
+        <Levels>
+          <SimpleLevel>
+            <Level>1</Level>
+            <Experience>0</Experience>
+          </SimpleLevel>
+          <SimpleLevel>
+            <Level>2</Level>
+            <Experience>10</Experience>
+          </SimpleLevel>
+          <SimpleLevel>
+            <Level>3</Level>
+            <Experience>20</Experience>
+          </SimpleLevel>
+        </Levels>
+      </Leveling>
       <Stats>
         <HitPoints>10</HitPoints>
         <Speed>10</Speed>
@@ -67,28 +85,28 @@
         <Attack>10</Attack>
         <Defense>0</Defense>
       </Shoes>
-    </Character>
-    <Leveling>
-      <Levels>
-        <SimpleLevel>
-          <Level>1</Level>
-          <Experience>0</Experience>
-        </SimpleLevel>
-        <SimpleLevel>
-          <Level>2</Level>
-          <Experience>10</Experience>
-        </SimpleLevel>
-        <SimpleLevel>
-          <Level>3</Level>
-          <Experience>20</Experience>
-        </SimpleLevel>
-      </Levels>
-    </Leveling>
-  </CharacterSystem>
-  <CharacterSystem>
-    <Character>
-      <Name>Character2</Name>
-      <Description>Character description here</Description>
+    </CharacterSystem>
+    <CharacterSystem>
+      <Character>
+        <Name>Character2</Name>
+        <Description>Character description here</Description>
+      </Character>
+      <Leveling>
+        <Levels>
+          <SimpleLevel>
+            <Level>1</Level>
+            <Experience>0</Experience>
+          </SimpleLevel>
+          <SimpleLevel>
+            <Level>2</Level>
+            <Experience>10</Experience>
+          </SimpleLevel>
+          <SimpleLevel>
+            <Level>3</Level>
+            <Experience>20</Experience>
+          </SimpleLevel>
+        </Levels>
+      </Leveling>
       <Stats>
         <HitPoints>10</HitPoints>
         <Speed>10</Speed>
@@ -152,28 +170,28 @@
         <Attack>10</Attack>
         <Defense>0</Defense>
       </Shoes>
-    </Character>
-    <Leveling>
-      <Levels>
-        <SimpleLevel>
-          <Level>1</Level>
-          <Experience>0</Experience>
-        </SimpleLevel>
-        <SimpleLevel>
-          <Level>2</Level>
-          <Experience>10</Experience>
-        </SimpleLevel>
-        <SimpleLevel>
-          <Level>3</Level>
-          <Experience>20</Experience>
-        </SimpleLevel>
-      </Levels>
-    </Leveling>
-  </CharacterSystem>
-  <CharacterSystem>
-    <Character>
-      <Name>Character3</Name>
-      <Description>Character description here</Description>
+    </CharacterSystem>
+    <CharacterSystem>
+      <Character>
+        <Name>Character3</Name>
+        <Description>Character description here</Description>
+      </Character>
+      <Leveling>
+        <Levels>
+          <SimpleLevel>
+            <Level>1</Level>
+            <Experience>0</Experience>
+          </SimpleLevel>
+          <SimpleLevel>
+            <Level>2</Level>
+            <Experience>10</Experience>
+          </SimpleLevel>
+          <SimpleLevel>
+            <Level>3</Level>
+            <Experience>20</Experience>
+          </SimpleLevel>
+        </Levels>
+      </Leveling>
       <Stats>
         <HitPoints>10</HitPoints>
         <Speed>10</Speed>
@@ -237,22 +255,6 @@
         <Attack>10</Attack>
         <Defense>0</Defense>
       </Shoes>
-    </Character>
-    <Leveling>
-      <Levels>
-        <SimpleLevel>
-          <Level>1</Level>
-          <Experience>0</Experience>
-        </SimpleLevel>
-        <SimpleLevel>
-          <Level>2</Level>
-          <Experience>10</Experience>
-        </SimpleLevel>
-        <SimpleLevel>
-          <Level>3</Level>
-          <Experience>20</Experience>
-        </SimpleLevel>
-      </Levels>
-    </Leveling>
-  </CharacterSystem>
-</ArrayOfCharacterSystem>
+    </CharacterSystem>
+  </CharacterSystems>
+</NoManaSystem>
