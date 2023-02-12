@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfCharacterSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <CharacterSystem>
+    <Character>
+      <Name>Character1</Name>
+      <Description>Character description here</Description>
+      <Stats>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>10</Defense>
+      </Stats>
+      <CharacterClass>
+        <Name>Chararcter Class 1</Name>
+        <Description>Character Class 1 description</Description>
+        <Speed>0</Speed>
+        <HitPoints>0</HitPoints>
+        <Attack>0</Attack>
+        <Defense>0</Defense>
+      </CharacterClass>
+      <Level>
+        <Level>1</Level>
+        <Experience>0</Experience>
+      </Level>
+      <Weapon>
+        <EquipmentWeight>medium</EquipmentWeight>
+        <EquipmentType>weapon</EquipmentType>
+        <Name>Weapon 1</Name>
+        <Description>Weapon 1 description</Description>
+        <Level>0</Level>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>10</Defense>
+        <EquipmentWeaponSet>sword</EquipmentWeaponSet>
+      </Weapon>
+      <Armor>
+        <EquipmentWeight>medium</EquipmentWeight>
+        <EquipmentType>armor</EquipmentType>
+        <Name>Armor 1</Name>
+        <Description>Arnor 1 description</Description>
+        <Level>0</Level>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>10</Defense>
+      </Armor>
+      <Hat>
+        <EquipmentWeight>medium</EquipmentWeight>
+        <EquipmentType>hat</EquipmentType>
+        <Name>Hat 1</Name>
+        <Description>Hat 1 description</Description>
+        <Level>0</Level>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>10</Defense>
+      </Hat>
+      <Shoes>
+        <EquipmentWeight>medium</EquipmentWeight>
+        <EquipmentType>shoes</EquipmentType>
+        <Name>Shoes 1</Name>
+        <Description>Shoes 1 description</Description>
+        <Level>0</Level>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>0</Defense>
+      </Shoes>
+    </Character>
+    <Leveling>
+      <Levels>
+        <SimpleLevel>
+          <Level>1</Level>
+          <Experience>0</Experience>
+        </SimpleLevel>
+        <SimpleLevel>
+          <Level>2</Level>
+          <Experience>10</Experience>
+        </SimpleLevel>
+        <SimpleLevel>
+          <Level>3</Level>
+          <Experience>20</Experience>
+        </SimpleLevel>
+      </Levels>
+    </Leveling>
+  </CharacterSystem>
+  <CharacterSystem>
+    <Character>
+      <Name>Character2</Name>
+      <Description>Character description here</Description>
+      <Stats>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>10</Defense>
+      </Stats>
+      <CharacterClass>
+        <Name>Chararcter Class 1</Name>
+        <Description>Character Class 1 description</Description>
+        <Speed>0</Speed>
+        <HitPoints>0</HitPoints>
+        <Attack>0</Attack>
+        <Defense>0</Defense>
+      </CharacterClass>
+      <Level>
+        <Level>1</Level>
+        <Experience>0</Experience>
+      </Level>
+      <Weapon>
+        <EquipmentWeight>medium</EquipmentWeight>
+        <EquipmentType>weapon</EquipmentType>
+        <Name>Weapon 1</Name>
+        <Description>Weapon 1 description</Description>
+        <Level>0</Level>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>10</Defense>
+        <EquipmentWeaponSet>sword</EquipmentWeaponSet>
+      </Weapon>
+      <Armor>
+        <EquipmentWeight>medium</EquipmentWeight>
+        <EquipmentType>armor</EquipmentType>
+        <Name>Armor 1</Name>
+        <Description>Arnor 1 description</Description>
+        <Level>0</Level>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>10</Defense>
+      </Armor>
+      <Hat>
+        <EquipmentWeight>medium</EquipmentWeight>
+        <EquipmentType>hat</EquipmentType>
+        <Name>Hat 1</Name>
+        <Description>Hat 1 description</Description>
+        <Level>0</Level>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>0</Defense>
+      </Hat>
+      <Shoes>
+        <EquipmentWeight>medium</EquipmentWeight>
+        <EquipmentType>shoes</EquipmentType>
+        <Name>Shoes 1</Name>
+        <Description>Shoes 1 description</Description>
+        <Level>0</Level>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>0</Defense>
+      </Shoes>
+    </Character>
+    <Leveling>
+      <Levels>
+        <SimpleLevel>
+          <Level>1</Level>
+          <Experience>0</Experience>
+        </SimpleLevel>
+        <SimpleLevel>
+          <Level>2</Level>
+          <Experience>10</Experience>
+        </SimpleLevel>
+        <SimpleLevel>
+          <Level>3</Level>
+          <Experience>20</Experience>
+        </SimpleLevel>
+      </Levels>
+    </Leveling>
+  </CharacterSystem>
+  <CharacterSystem>
+    <Character>
+      <Name>Character3</Name>
+      <Description>Character description here</Description>
+      <Stats>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>10</Defense>
+      </Stats>
+      <CharacterClass>
+        <Name>Chararcter Class 1</Name>
+        <Description>Character Class 1 description</Description>
+        <Speed>0</Speed>
+        <HitPoints>0</HitPoints>
+        <Attack>0</Attack>
+        <Defense>0</Defense>
+      </CharacterClass>
+      <Level>
+        <Level>1</Level>
+        <Experience>0</Experience>
+      </Level>
+      <Weapon>
+        <EquipmentWeight>medium</EquipmentWeight>
+        <EquipmentType>weapon</EquipmentType>
+        <Name>Weapon 1</Name>
+        <Description>Weapon 1 description</Description>
+        <Level>0</Level>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>10</Defense>
+        <EquipmentWeaponSet>sword</EquipmentWeaponSet>
+      </Weapon>
+      <Armor>
+        <EquipmentWeight>medium</EquipmentWeight>
+        <EquipmentType>armor</EquipmentType>
+        <Name>Armor 1</Name>
+        <Description>Arnor 1 description</Description>
+        <Level>0</Level>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>10</Defense>
+      </Armor>
+      <Hat>
+        <EquipmentWeight>medium</EquipmentWeight>
+        <EquipmentType>hat</EquipmentType>
+        <Name>Hat 1</Name>
+        <Description>Hat 1 description</Description>
+        <Level>0</Level>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>0</Defense>
+      </Hat>
+      <Shoes>
+        <EquipmentWeight>medium</EquipmentWeight>
+        <EquipmentType>shoes</EquipmentType>
+        <Name>Shoes 1</Name>
+        <Description>Shoes 1 description</Description>
+        <Level>0</Level>
+        <HitPoints>10</HitPoints>
+        <Speed>10</Speed>
+        <Attack>10</Attack>
+        <Defense>0</Defense>
+      </Shoes>
+    </Character>
+    <Leveling>
+      <Levels>
+        <SimpleLevel>
+          <Level>1</Level>
+          <Experience>0</Experience>
+        </SimpleLevel>
+        <SimpleLevel>
+          <Level>2</Level>
+          <Experience>10</Experience>
+        </SimpleLevel>
+        <SimpleLevel>
+          <Level>3</Level>
+          <Experience>20</Experience>
+        </SimpleLevel>
+      </Levels>
+    </Leveling>
+  </CharacterSystem>
+</ArrayOfCharacterSystem>

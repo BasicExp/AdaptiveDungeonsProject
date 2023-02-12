@@ -7,30 +7,14 @@ namespace AdaptiveRPG.Character.Systems.NoMana
 {
     public class Character
     {
-        public readonly NoManaStats stats;
-        public readonly NoManaCharacterClass characterClass;
-        public readonly NoManaLeveling leveling;
-        public NoManaWeapon Weapon { get; set; }
-        public NoManaEquipment Armor { get; set; }
-        public NoManaEquipment Hat { get;  set; }
-        public NoManaEquipment Shoes { get; set; }
-
-        public int Attack
-        {
-            get
-            {
-                return stats.Attack + characterClass.Attack + Weapon.Attack + 
-                    Armor.Attack + Hat.Attack + Shoes.Attack;
-            }
-        }
-
-        public int Defense
-        {
-            get
-            {
-                return stats.Defense + characterClass.Defense + Weapon.Defense +
-                    Armor.Defense + Hat.Defense + Shoes.Defense;
-            }
-        }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public NoManaStats? Stats { get; set; }
+        public NoManaCharacterClass? CharacterClass { get; set; }
+        public SimpleLevel? Level { get; set; }
+        public NoManaWeapon? Weapon { get; set; }
+        public NoManaEquipment? Armor { get; set; }
+        public NoManaEquipment? Hat { get;  set; }
+        public NoManaEquipment? Shoes { get; set; }
     }
 }

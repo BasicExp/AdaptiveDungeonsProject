@@ -3,7 +3,7 @@
     public class NoManaEquipment
     {
         public EquipmentConst.WEIGHT EquipmentWeight { get; set; }
-        public EquipmentConst.TYPESET_1 EquipmentType { get; protected set; }
+        public EquipmentConst.TYPESET_1 EquipmentType { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public int Level { get; set; }
