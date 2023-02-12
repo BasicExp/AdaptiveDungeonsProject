@@ -1,4 +1,5 @@
 ﻿using AdaptiveRPG.Character;
+using AdaptiveRPG.Character.Components.Abilities;
 using AdaptiveRPG.Character.Components.CharacterClasses;
 using AdaptiveRPG.Character.Components.Equipment;
 using AdaptiveRPG.Character.Components.Leveling;
@@ -10,11 +11,11 @@ namespace TestGrounds.AdaptiveRPG.NoMana
 {
     public class NoManaTestGround
     {
-        public static void LoadSampleCharacterSystem(string path)
+        public static NoManaSystem LoadSampleCharacterSystem(string path)
         {
             SystemLoader<NoManaSystem> loader = new SystemLoader<NoManaSystem>();
             NoManaSystem result = loader.Load(path);
-            Console.Write(result);
+            return result;
         }
 
         public static void CreateSampleCharacterSystem(string path)
@@ -40,20 +41,53 @@ namespace TestGrounds.AdaptiveRPG.NoMana
             lvling1.Levels.Add(lvl2);
             lvling1.Levels.Add(lvl3);
 
+            // Ability stuff
+            NoManaAbility ab1 = new NoManaAbility();
+            ab1.Name= "ab1";
+            ab1.CastTime = 0;
+            ab1.Description = "ab1 descrption";
+            ab1.EffectType = AbilityConst.EFFECT_TYPE.damage;
+
+            NoManaAbility ab2 = new NoManaAbility();
+            ab2.Name = "ab2";
+            ab2.CastTime = 0;
+            ab2.Description = "ab1 descrption";
+            ab2.EffectType = AbilityConst.EFFECT_TYPE.heal;
+
+            CharacterClassAbility ccab1 = new CharacterClassAbility();
+            ccab1.RequiredLevel = 10;
+            ccab1.Ability = "ab1";
+
+            CharacterClassAbility ccab2 = new CharacterClassAbility();
+            ccab2.RequiredLevel = 5;
+            ccab2.Ability = "ab2";
+
+            // Class stuff
+            CharacterClassSystem ccs1 = new CharacterClassSystem();
+            ccs1.CharacterClass = new NoManaCharacterClass();
+            ccs1.CharacterClass.Name = "CharacterClass1";
+            ccs1.CharacterClass.Description = "Character Class 1 description";
+            ccs1.ClassAbilities = new List<CharacterClassAbility> { ccab1, ccab2 };
+
+            CharacterClassSystem ccs2 = new CharacterClassSystem();
+            ccs2.CharacterClass = new NoManaCharacterClass();
+            ccs2.CharacterClass.Name = "CharacterClass2";
+            ccs2.CharacterClass.Description = "Character Class 2 description";
+            ccs2.ClassAbilities = new List<CharacterClassAbility> { ccab1, ccab2 };
+
             // Characters
             CharacterSystem cs1 = new CharacterSystem();
             cs1.Leveling = lvling1;
             cs1.Character = new SimpleCharacter();
             cs1.Character.Name = "Character1";
+            cs1.Character.UniqueId = "MainCharacter1";
             cs1.Character.Description = "Character description here";
             cs1.Stats = new NoManaStats();
             cs1.Stats.HitPoints = 10;
             cs1.Stats.Speed = 10;
             cs1.Stats.Attack = 10;
             cs1.Stats.Defense = 10;
-            cs1.CharacterClass = new NoManaCharacterClass();
-            cs1.CharacterClass.Name = "Chararcter Class 1";
-            cs1.CharacterClass.Description = "Character Class 1 description";
+            cs1.CharacterClassSystem = "CharacterClass1";
             cs1.Stats.HitPoints = 10;
             cs1.Stats.Speed = 10;
             cs1.Stats.Attack = 10;
@@ -102,15 +136,14 @@ namespace TestGrounds.AdaptiveRPG.NoMana
             cs2.Leveling = lvling1;
             cs2.Character = new SimpleCharacter();
             cs2.Character.Name = "Character2";
+            cs2.Character.UniqueId = "MainCharacter2";
             cs2.Character.Description = "Character description here";
             cs2.Stats = new NoManaStats();
             cs2.Stats.HitPoints = 10;
             cs2.Stats.Speed = 10;
             cs2.Stats.Attack = 10;
             cs2.Stats.Defense = 10;
-            cs2.CharacterClass = new NoManaCharacterClass();
-            cs2.CharacterClass.Name = "Chararcter Class 1";
-            cs2.CharacterClass.Description = "Character Class 1 description";
+            cs2.CharacterClassSystem = "CharacterClass1";
             cs2.Stats.HitPoints = 10;
             cs2.Stats.Speed = 10;
             cs2.Stats.Attack = 10;
@@ -158,15 +191,14 @@ namespace TestGrounds.AdaptiveRPG.NoMana
             cs3.Leveling = lvling1;
             cs3.Character = new SimpleCharacter();
             cs3.Character.Name = "Character3";
+            cs3.Character.UniqueId = "MainCharacter3";
             cs3.Character.Description = "Character description here";
             cs3.Stats = new NoManaStats();
             cs3.Stats.HitPoints = 10;
             cs3.Stats.Speed = 10;
             cs3.Stats.Attack = 10;
             cs3.Stats.Defense = 10;
-            cs3.CharacterClass = new NoManaCharacterClass();
-            cs3.CharacterClass.Name = "Chararcter Class 1";
-            cs3.CharacterClass.Description = "Character Class 1 description";
+            cs3.CharacterClassSystem = "CharacterClass1";
             cs3.Stats.HitPoints = 10;
             cs3.Stats.Speed = 10;
             cs3.Stats.Attack = 10;
@@ -210,6 +242,8 @@ namespace TestGrounds.AdaptiveRPG.NoMana
             cs3.Shoes.Attack = 10;
 
             NoManaSystem noMana = new NoManaSystem();
+            noMana.Abilities = new List<NoManaAbility> { ab1, ab2 };
+            noMana.CharacterClassSystems = new List<CharacterClassSystem> { ccs1, ccs2 }; 
             noMana.CharacterSystems = new List<CharacterSystem> { cs1, cs2, cs3 };
 
             loader.Write(path, noMana);

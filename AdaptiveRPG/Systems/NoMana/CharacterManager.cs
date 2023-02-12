@@ -1,29 +1,35 @@
 ﻿using AdaptiveRPG.Character.Components.Leveling;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AdaptiveRPG.Systems.NoMana
 {
-    /// <summary>
-    /// This class seperates the structure of the Character from logic that would result in
-    /// the mutation of the values. This is done to help keep serialization comprehensible
-    /// as well as to restrict access to character fields after instantiation.
-    /// </summary>
     public class CharacterManager
     {
-        private CharacterSystem CS { get; set; }
         private readonly int MaxLevel;
 
-        public CharacterManager(CharacterSystem characterSystem)
+        private SystemManager SystemManager;
+        private CharacterSystem CharacterSystem;
+        private CharacterClassSystem ClassSystem;
+
+
+        public CharacterManager(string characterUniqueId, SystemManager systemManager)
         {
-            CS = characterSystem;
-            MaxLevel = CS.Leveling.Levels.MaxBy(l => l.Level).Level;
+            SystemManager = systemManager;
+            CharacterSystem = SystemManager.CharacterSystems[characterUniqueId];
+            ClassSystem = SystemManager.CharacterClassSystems[CharacterSystem.CharacterClassSystem];
+            MaxLevel = CharacterSystem.Leveling.Levels.MaxBy(l => l.Level).Level;
         }
 
         public int Attack
         {
             get
             {
-                return CS.Stats.Attack + CS.CharacterClass.Attack + CS.Weapon.Attack +
-                    CS.Armor.Attack + CS.Hat.Attack + CS.Shoes.Attack;
+                return CharacterSystem.Stats.Attack + ClassSystem.CharacterClass.Attack + CharacterSystem.Weapon.Attack +
+                    CharacterSystem.Armor.Attack + CharacterSystem.Hat.Attack + CharacterSystem.Shoes.Attack;
             }
         }
 
@@ -31,27 +37,27 @@ namespace AdaptiveRPG.Systems.NoMana
         {
             get
             {
-                return CS.Stats.Defense + CS.CharacterClass.Defense + CS.Weapon.Defense +
-                    CS.Armor.Defense + CS.Hat.Defense + CS.Shoes.Defense;
+                return CharacterSystem.Stats.Defense + ClassSystem.CharacterClass.Defense + CharacterSystem.Weapon.Defense +
+                    CharacterSystem.Armor.Defense + CharacterSystem.Hat.Defense + CharacterSystem.Shoes.Defense;
             }
         }
 
 
         private int updateLevel()
         {
-            if (CS.Level.Level == MaxLevel)
+            if (CharacterSystem.Level.Level == MaxLevel)
             {
-                return CS.Level.Level;
+                return CharacterSystem.Level.Level;
             }
 
-            SimpleLevel? nextLevel = CS.Leveling.Levels.Find((a) => a.Level == CS.Level.Level + 1);
+            SimpleLevel? nextLevel = CharacterSystem.Leveling.Levels.Find((a) => a.Level == CharacterSystem.Level.Level + 1);
 
             if (nextLevel == null)
             {
-                throw new NullReferenceException($"No entry for level {CS.Level.Level + 1} found for {CS.Character.Name}");
+                throw new NullReferenceException($"No entry for level {CharacterSystem.Level.Level + 1} found for {CharacterSystem.Character.Name}");
             }
 
-            return CS.Level.Level = nextLevel.Level;
+            return CharacterSystem.Level.Level = nextLevel.Level;
         }
 
         /// <summary>
@@ -61,9 +67,8 @@ namespace AdaptiveRPG.Systems.NoMana
         /// <returns>Character level after experience is applied</returns>
         public int addExperience(int experience)
         {
-            CS.Level.Experience += experience;
+            CharacterSystem.Level.Experience += experience;
             return updateLevel();
         }
-
     }
 }

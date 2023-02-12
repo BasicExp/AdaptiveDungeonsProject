@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AdaptiveRPG.Character.Components.Abilities;
 
 namespace AdaptiveRPG.Systems.NoMana
 {
     public class NoManaSystem
     {
+        public List<NoManaAbility> Abilities { get; set; }
+        public List<CharacterClassSystem> CharacterClassSystems { get; set; }
         public List<CharacterSystem> CharacterSystems { get; set; }
     }
 }

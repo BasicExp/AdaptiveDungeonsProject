@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Combat\Systems\" />
-    <Folder Include="Narrative\Systems\" />
+    <Folder Include="Combat\" />
+    <Folder Include="Narrative\" />
   </ItemGroup>
 
 </Project>
