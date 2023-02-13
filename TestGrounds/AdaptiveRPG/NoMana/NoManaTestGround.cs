@@ -23,8 +23,9 @@ namespace TestGrounds.AdaptiveRPG.NoMana
             SystemLoader<NoManaSystem> loader = new SystemLoader<NoManaSystem>();
 
             // Used for each character
-            SimpleLeveling lvling1 = new SimpleLeveling();
+            LevelingSystem lvling1 = new LevelingSystem();
             lvling1.Levels = new List<SimpleLevel>();
+            lvling1.Name = "LevelSystem1";
 
             SimpleLevel lvl1 = new SimpleLevel();
             lvl1.Level = 1;
@@ -56,28 +57,33 @@ namespace TestGrounds.AdaptiveRPG.NoMana
 
             CharacterClassAbility ccab1 = new CharacterClassAbility();
             ccab1.RequiredLevel = 10;
-            ccab1.Ability = "ab1";
+            ccab1.Name = "ab1";
 
             CharacterClassAbility ccab2 = new CharacterClassAbility();
             ccab2.RequiredLevel = 5;
-            ccab2.Ability = "ab2";
+            ccab2.Name = "ab2";
 
             // Class stuff
-            CharacterClassSystem ccs1 = new CharacterClassSystem();
-            ccs1.CharacterClass = new NoManaCharacterClass();
-            ccs1.CharacterClass.Name = "CharacterClass1";
-            ccs1.CharacterClass.Description = "Character Class 1 description";
-            ccs1.ClassAbilities = new List<CharacterClassAbility> { ccab1, ccab2 };
-
             CharacterClassSystem ccs2 = new CharacterClassSystem();
             ccs2.CharacterClass = new NoManaCharacterClass();
             ccs2.CharacterClass.Name = "CharacterClass2";
             ccs2.CharacterClass.Description = "Character Class 2 description";
-            ccs2.ClassAbilities = new List<CharacterClassAbility> { ccab1, ccab2 };
+            ccs2.CharacterClassAbilities = new List<CharacterClassAbility> { ccab1, ccab2 };
+
+            CharacterClassUpgrade ugc1 = new CharacterClassUpgrade();
+            ugc1.Name = ccs2.CharacterClass.Name;
+            ugc1.RequiredLevel = 10;
+
+            CharacterClassSystem ccs1 = new CharacterClassSystem();
+            ccs1.CharacterClass = new NoManaCharacterClass();
+            ccs1.CharacterClass.Name = "CharacterClass1";
+            ccs1.CharacterClass.Description = "Character Class 1 description";
+            ccs1.CharacterClassAbilities = new List<CharacterClassAbility> { ccab1, ccab2 };
+            ccs1.ChararcterClassUpgrades = new List<CharacterClassUpgrade> { ugc1 };
 
             // Characters
             CharacterSystem cs1 = new CharacterSystem();
-            cs1.Leveling = lvling1;
+            cs1.LevelingSystem = lvling1.Name;
             cs1.Character = new SimpleCharacter();
             cs1.Character.Name = "Character1";
             cs1.Character.UniqueId = "MainCharacter1";
@@ -133,7 +139,7 @@ namespace TestGrounds.AdaptiveRPG.NoMana
 
 
             CharacterSystem cs2 = new CharacterSystem();
-            cs2.Leveling = lvling1;
+            cs2.LevelingSystem = lvling1.Name;
             cs2.Character = new SimpleCharacter();
             cs2.Character.Name = "Character2";
             cs2.Character.UniqueId = "MainCharacter2";
@@ -188,7 +194,7 @@ namespace TestGrounds.AdaptiveRPG.NoMana
 
 
             CharacterSystem cs3 = new CharacterSystem();
-            cs3.Leveling = lvling1;
+            cs3.LevelingSystem = lvling1.Name;
             cs3.Character = new SimpleCharacter();
             cs3.Character.Name = "Character3";
             cs3.Character.UniqueId = "MainCharacter3";
@@ -245,6 +251,7 @@ namespace TestGrounds.AdaptiveRPG.NoMana
             noMana.Abilities = new List<NoManaAbility> { ab1, ab2 };
             noMana.CharacterClassSystems = new List<CharacterClassSystem> { ccs1, ccs2 }; 
             noMana.CharacterSystems = new List<CharacterSystem> { cs1, cs2, cs3 };
+            noMana.LevelingSystems = new List<LevelingSystem> { lvling1 };
 
             loader.Write(path, noMana);
 

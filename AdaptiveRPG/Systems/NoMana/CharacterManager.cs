@@ -1,9 +1,5 @@
-﻿using AdaptiveRPG.Character.Components.Leveling;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AdaptiveRPG.Character.Components.Abilities;
+using AdaptiveRPG.Character.Components.Leveling;
 
 namespace AdaptiveRPG.Systems.NoMana
 {
@@ -14,6 +10,7 @@ namespace AdaptiveRPG.Systems.NoMana
         private SystemManager SystemManager;
         private CharacterSystem CharacterSystem;
         private CharacterClassSystem ClassSystem;
+        private LevelingSystem LevelingSystem;
 
 
         public CharacterManager(string characterUniqueId, SystemManager systemManager)
@@ -21,8 +18,12 @@ namespace AdaptiveRPG.Systems.NoMana
             SystemManager = systemManager;
             CharacterSystem = SystemManager.CharacterSystems[characterUniqueId];
             ClassSystem = SystemManager.CharacterClassSystems[CharacterSystem.CharacterClassSystem];
-            MaxLevel = CharacterSystem.Leveling.Levels.MaxBy(l => l.Level).Level;
+            LevelingSystem = SystemManager.LevelingSystems[CharacterSystem.LevelingSystem];
+            MaxLevel = LevelingSystem.Levels.MaxBy(l => l.Level).Level;
         }
+
+        public int Level { get { return CharacterSystem.Level.Level; } }
+        public int Experience { get { return CharacterSystem.Level.Experience; } }
 
         public int Attack
         {
@@ -42,6 +43,41 @@ namespace AdaptiveRPG.Systems.NoMana
             }
         }
 
+        public int HealthPoints
+        {
+            get
+            {
+                return CharacterSystem.Stats.HitPoints + ClassSystem.CharacterClass.HitPoints + CharacterSystem.Weapon.HitPoints +
+                    CharacterSystem.Armor.HitPoints + CharacterSystem.Hat.HitPoints + CharacterSystem.Shoes.HitPoints;
+            }
+        }
+
+        public int Speed
+        {
+            get
+            {
+                return CharacterSystem.Stats.Speed + ClassSystem.CharacterClass.Speed + CharacterSystem.Weapon.Speed +
+                    CharacterSystem.Armor.Speed + CharacterSystem.Hat.Speed + CharacterSystem.Shoes.Speed;
+            }
+        }
+
+        public List<NoManaAbility> AvailableAbilities
+        {
+            get
+            {
+                return ClassSystem.CharacterClassAbilities
+                    .FindAll(a => a.RequiredLevel <= CharacterSystem.Level.Level)
+                    .ConvertAll(a => SystemManager.Abilities[a.Name]);
+            }
+        }
+
+        public List<NoManaAbility> AllAbilities
+        {
+            get
+            {
+                return ClassSystem.CharacterClassAbilities.ConvertAll(a => SystemManager.Abilities[a.Name]);
+            }
+        }
 
         private int updateLevel()
         {
@@ -50,7 +86,7 @@ namespace AdaptiveRPG.Systems.NoMana
                 return CharacterSystem.Level.Level;
             }
 
-            SimpleLevel? nextLevel = CharacterSystem.Leveling.Levels.Find((a) => a.Level == CharacterSystem.Level.Level + 1);
+            SimpleLevel? nextLevel = LevelingSystem.Levels.Find((a) => a.Level == CharacterSystem.Level.Level + 1);
 
             if (nextLevel == null)
             {
@@ -60,15 +96,11 @@ namespace AdaptiveRPG.Systems.NoMana
             return CharacterSystem.Level.Level = nextLevel.Level;
         }
 
-        /// <summary>
-        /// Add experience to the Character's expereince pool
-        /// </summary>
-        /// <param name="experience">The amount of experience to add</param>
-        /// <returns>Character level after experience is applied</returns>
         public int addExperience(int experience)
         {
             CharacterSystem.Level.Experience += experience;
             return updateLevel();
         }
+
     }
 }

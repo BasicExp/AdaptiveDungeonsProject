@@ -8,3 +8,6 @@ foreach ((string k, CharacterSystem v) in system.CharacterSystems)
 {
     CharacterManager cm = new CharacterManager(k, system);
 }
+
+// TODO - Finish CharacterManager logic
+// TODO - Add equipment manager?
