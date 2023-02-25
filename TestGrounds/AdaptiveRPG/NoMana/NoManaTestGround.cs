@@ -11,6 +11,28 @@ namespace TestGrounds.AdaptiveRPG.NoMana
 {
     public class NoManaTestGround
     {
+
+        public static void HappyPath()
+        {
+            NoManaTestGround.CreateSampleCharacterSystem("NoManaSystem.xml");
+            SystemManager system = new SystemManager(NoManaTestGround.LoadSampleCharacterSystem("NoManaSystem.xml"));
+            foreach ((string k, CharacterSystem v) in system.CharacterSystems)
+            {
+                // Test Instantiating
+                CharacterManager cm = new CharacterManager(k, system);
+                // Test Leveling
+                while (cm.Level < cm.MaxLevel.Level)
+                {
+                    cm.addExpereience(5);
+                    Console.WriteLine($"[{cm.Name}][Level:{cm.Level}][Experience:{cm.Experience}]");
+                }
+                // Test Equipment Resolution
+                Console.WriteLine($"[{cm.Name}][Weapon:{cm.Weapon.Name}][Armor:{cm.Armor.Name}][Shoes:{cm.Shoes.Name}][Hat:{cm.Hat.Name}]");
+                // Test Stat Resolution after Class Based Equipment Mods
+                Console.WriteLine($"[{cm.Name}][Attack:{cm.Attack}][Defense:{cm.Defense}][Speed:{cm.Speed}][HP:{cm.HitPoints}]");
+            }
+        }
+
         public static NoManaSystem LoadSampleCharacterSystem(string path)
         {
             SystemLoader<NoManaSystem> loader = new SystemLoader<NoManaSystem>();
@@ -63,12 +85,60 @@ namespace TestGrounds.AdaptiveRPG.NoMana
             ccab2.RequiredLevel = 5;
             ccab2.Name = "ab2";
 
+            // Equipment stuff
+            NoManaWeapon weapon1 = new NoManaWeapon();
+            weapon1.Name = "Weapon 1";
+            weapon1.Description = "Weapon 1 description";
+            weapon1.EquipmentWeight = EquipmentConst.WEIGHT.medium;
+            weapon1.EquipmentWeaponSet = EquipmentConst.WEAPONSET_1.sword;
+            weapon1.HitPoints = 10;
+            weapon1.Speed = 10;
+            weapon1.Attack = 10;
+            weapon1.Defense = 10;
+            NoManaEquipment armor1 = new NoManaEquipment();
+            armor1.Name = "Armor 1";
+            armor1.Description = "Arnor 1 description";
+            armor1.EquipmentWeight = EquipmentConst.WEIGHT.medium;
+            armor1.EquipmentType = EquipmentConst.TYPESET_1.armor;
+            armor1.HitPoints = 10;
+            armor1.Speed = 10;
+            armor1.Attack = 10;
+            armor1.Defense = 10;
+            NoManaEquipment hat1 = new NoManaEquipment();
+            hat1.Name = "Hat 1";
+            hat1.Description = "Hat 1 description";
+            hat1.EquipmentWeight = EquipmentConst.WEIGHT.medium;
+            hat1.EquipmentType = EquipmentConst.TYPESET_1.hat;
+            hat1.HitPoints = 10;
+            hat1.Speed = 10;
+            hat1.Attack = 10;
+            hat1.Defense = 10;
+            NoManaEquipment shoes1 = new NoManaEquipment();
+            shoes1.Name = "Shoes 1";
+            shoes1.Description = "Shoes 1 description";
+            shoes1.EquipmentWeight = EquipmentConst.WEIGHT.medium;
+            shoes1.EquipmentType = EquipmentConst.TYPESET_1.shoes;
+            shoes1.HitPoints = 10;
+            shoes1.Speed = 10;
+            shoes1.Attack = 10;
+
+            // Equipment Mods
+            EquipmentWeightModifier equipMod1 = new EquipmentWeightModifier();
+            equipMod1.Weight = EquipmentConst.WEIGHT.medium;
+            equipMod1.Modifier = 1.1;
+
+            WeaponTypeModifier wpMod1 = new WeaponTypeModifier();
+            wpMod1.Type = EquipmentConst.WEAPONSET_1.sword;
+            wpMod1.Modifier = 1.2;
+
             // Class stuff
             CharacterClassSystem ccs2 = new CharacterClassSystem();
             ccs2.CharacterClass = new NoManaCharacterClass();
             ccs2.CharacterClass.Name = "CharacterClass2";
             ccs2.CharacterClass.Description = "Character Class 2 description";
             ccs2.CharacterClassAbilities = new List<CharacterClassAbility> { ccab1, ccab2 };
+            ccs2.EquimentWeightModifiers = new List<EquipmentWeightModifier> { equipMod1 };
+            ccs2.WeaponTypeModifiers = new List<WeaponTypeModifier> { wpMod1 };
 
             CharacterClassUpgrade ugc1 = new CharacterClassUpgrade();
             ugc1.Name = ccs2.CharacterClass.Name;
@@ -80,6 +150,8 @@ namespace TestGrounds.AdaptiveRPG.NoMana
             ccs1.CharacterClass.Description = "Character Class 1 description";
             ccs1.CharacterClassAbilities = new List<CharacterClassAbility> { ccab1, ccab2 };
             ccs1.ChararcterClassUpgrades = new List<CharacterClassUpgrade> { ugc1 };
+            ccs1.EquimentWeightModifiers = new List<EquipmentWeightModifier> { equipMod1 };
+            ccs1.WeaponTypeModifiers = new List<WeaponTypeModifier> { wpMod1 };
 
             // Characters
             CharacterSystem cs1 = new CharacterSystem();
@@ -98,44 +170,10 @@ namespace TestGrounds.AdaptiveRPG.NoMana
             cs1.Stats.Speed = 10;
             cs1.Stats.Attack = 10;
             cs1.Stats.Defense = 10;
-            cs1.Level = new SimpleLevel();
-            cs1.Level.Level = 1;
-            cs1.Level.Experience = 0;
-            cs1.Weapon = new NoManaWeapon();
-            cs1.Weapon.Name = "Weapon 1";
-            cs1.Weapon.Description = "Weapon 1 description";
-            cs1.Weapon.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            cs1.Weapon.EquipmentWeaponSet = EquipmentConst.WEAPONSET_1.sword;
-            cs1.Weapon.HitPoints = 10;
-            cs1.Weapon.Speed = 10;
-            cs1.Weapon.Attack = 10;
-            cs1.Weapon.Defense = 10;
-            cs1.Armor = new NoManaEquipment();
-            cs1.Armor.Name = "Armor 1";
-            cs1.Armor.Description = "Arnor 1 description";
-            cs1.Armor.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            cs1.Armor.EquipmentType = EquipmentConst.TYPESET_1.armor;
-            cs1.Armor.HitPoints = 10;
-            cs1.Armor.Speed = 10;
-            cs1.Armor.Attack = 10;
-            cs1.Armor.Defense = 10;
-            cs1.Hat = new NoManaEquipment();
-            cs1.Hat.Name = "Hat 1";
-            cs1.Hat.Description = "Hat 1 description";
-            cs1.Hat.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            cs1.Hat.EquipmentType = EquipmentConst.TYPESET_1.hat;
-            cs1.Hat.HitPoints = 10;
-            cs1.Hat.Speed = 10;
-            cs1.Hat.Attack = 10;
-            cs1.Hat.Defense = 10;
-            cs1.Shoes = new NoManaEquipment();
-            cs1.Shoes.Name = "Shoes 1";
-            cs1.Shoes.Description = "Shoes 1 description";
-            cs1.Shoes.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            cs1.Shoes.EquipmentType = EquipmentConst.TYPESET_1.shoes;
-            cs1.Shoes.HitPoints = 10;
-            cs1.Shoes.Speed = 10;
-            cs1.Shoes.Attack = 10;
+            cs1.Weapon = "Weapon 1";
+            cs1.Armor = "Armor 1";
+            cs1.Hat = "Hat 1";
+            cs1.Shoes = "Shoes 1";
 
 
             CharacterSystem cs2 = new CharacterSystem();
@@ -154,43 +192,10 @@ namespace TestGrounds.AdaptiveRPG.NoMana
             cs2.Stats.Speed = 10;
             cs2.Stats.Attack = 10;
             cs2.Stats.Defense = 10;
-            cs2.Level = new SimpleLevel();
-            cs2.Level.Level = 1;
-            cs2.Level.Experience = 0;
-            cs2.Weapon = new NoManaWeapon();
-            cs2.Weapon.Name = "Weapon 1";
-            cs2.Weapon.Description = "Weapon 1 description";
-            cs2.Weapon.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            cs2.Weapon.EquipmentWeaponSet = EquipmentConst.WEAPONSET_1.sword;
-            cs2.Weapon.HitPoints = 10;
-            cs2.Weapon.Speed = 10;
-            cs2.Weapon.Attack = 10;
-            cs2.Weapon.Defense = 10;
-            cs2.Armor = new NoManaEquipment();
-            cs2.Armor.Name = "Armor 1";
-            cs2.Armor.Description = "Arnor 1 description";
-            cs2.Armor.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            cs2.Armor.EquipmentType = EquipmentConst.TYPESET_1.armor;
-            cs2.Armor.HitPoints = 10;
-            cs2.Armor.Speed = 10;
-            cs2.Armor.Attack = 10;
-            cs2.Armor.Defense = 10;
-            cs2.Hat = new NoManaEquipment();
-            cs2.Hat.Name = "Hat 1";
-            cs2.Hat.Description = "Hat 1 description";
-            cs2.Hat.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            cs2.Hat.EquipmentType = EquipmentConst.TYPESET_1.hat;
-            cs2.Hat.HitPoints = 10;
-            cs2.Hat.Speed = 10;
-            cs2.Hat.Attack = 10;
-            cs2.Shoes = new NoManaEquipment();
-            cs2.Shoes.Name = "Shoes 1";
-            cs2.Shoes.Description = "Shoes 1 description";
-            cs2.Shoes.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            cs2.Shoes.EquipmentType = EquipmentConst.TYPESET_1.shoes;
-            cs2.Shoes.HitPoints = 10;
-            cs2.Shoes.Speed = 10;
-            cs2.Shoes.Attack = 10;
+            cs2.Weapon = "Weapon 1";
+            cs2.Armor = "Armor 1";
+            cs2.Hat = "Hat 1";
+            cs2.Shoes = "Shoes 1";
 
 
             CharacterSystem cs3 = new CharacterSystem();
@@ -209,46 +214,15 @@ namespace TestGrounds.AdaptiveRPG.NoMana
             cs3.Stats.Speed = 10;
             cs3.Stats.Attack = 10;
             cs3.Stats.Defense = 10;
-            cs3.Level = new SimpleLevel();
-            cs3.Level.Level = 1;
-            cs3.Level.Experience = 0;
-            cs3.Weapon = new NoManaWeapon();
-            cs3.Weapon.Name = "Weapon 1";
-            cs3.Weapon.Description = "Weapon 1 description";
-            cs3.Weapon.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            cs3.Weapon.EquipmentWeaponSet = EquipmentConst.WEAPONSET_1.sword;
-            cs3.Weapon.HitPoints = 10;
-            cs3.Weapon.Speed = 10;
-            cs3.Weapon.Attack = 10;
-            cs3.Weapon.Defense = 10;
-            cs3.Armor = new NoManaEquipment();
-            cs3.Armor.Name = "Armor 1";
-            cs3.Armor.Description = "Arnor 1 description";
-            cs3.Armor.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            cs3.Armor.EquipmentType = EquipmentConst.TYPESET_1.armor;
-            cs3.Armor.HitPoints = 10;
-            cs3.Armor.Speed = 10;
-            cs3.Armor.Attack = 10;
-            cs3.Armor.Defense = 10;
-            cs3.Hat = new NoManaEquipment();
-            cs3.Hat.Name = "Hat 1";
-            cs3.Hat.Description = "Hat 1 description";
-            cs3.Hat.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            cs3.Hat.EquipmentType = EquipmentConst.TYPESET_1.hat;
-            cs3.Hat.HitPoints = 10;
-            cs3.Hat.Speed = 10;
-            cs3.Hat.Attack = 10;
-            cs3.Shoes = new NoManaEquipment();
-            cs3.Shoes.Name = "Shoes 1";
-            cs3.Shoes.Description = "Shoes 1 description";
-            cs3.Shoes.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            cs3.Shoes.EquipmentType = EquipmentConst.TYPESET_1.shoes;
-            cs3.Shoes.HitPoints = 10;
-            cs3.Shoes.Speed = 10;
-            cs3.Shoes.Attack = 10;
+            cs3.Weapon = "Weapon 1";
+            cs3.Armor = "Armor 1";
+            cs3.Hat = "Hat 1";
+            cs3.Shoes = "Shoes 1";
 
             NoManaSystem noMana = new NoManaSystem();
             noMana.Abilities = new List<NoManaAbility> { ab1, ab2 };
+            noMana.Weapons = new List<NoManaWeapon> { weapon1 };
+            noMana.Equipment = new List<NoManaEquipment> { armor1, hat1, shoes1 };
             noMana.CharacterClassSystems = new List<CharacterClassSystem> { ccs1, ccs2 }; 
             noMana.CharacterSystems = new List<CharacterSystem> { cs1, cs2, cs3 };
             noMana.LevelingSystems = new List<LevelingSystem> { lvling1 };

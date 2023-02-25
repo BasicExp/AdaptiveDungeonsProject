@@ -1,11 +1,12 @@
 ﻿using AdaptiveRPG.Character.Components.Abilities;
+using AdaptiveRPG.Character.Components.Equipment;
 using AdaptiveRPG.Character.Components.Leveling;
 
 namespace AdaptiveRPG.Systems.NoMana
 {
     public class CharacterManager
     {
-        private readonly int MaxLevel;
+        public readonly SimpleLevel MaxLevel;
 
         private SystemManager SystemManager;
         private CharacterSystem CharacterSystem;
@@ -19,45 +20,83 @@ namespace AdaptiveRPG.Systems.NoMana
             CharacterSystem = SystemManager.CharacterSystems[characterUniqueId];
             ClassSystem = SystemManager.CharacterClassSystems[CharacterSystem.CharacterClassSystem];
             LevelingSystem = SystemManager.LevelingSystems[CharacterSystem.LevelingSystem];
-            MaxLevel = LevelingSystem.Levels.MaxBy(l => l.Level).Level;
+            MaxLevel = LevelingSystem.Levels.MaxBy(l => l.Level);
+            // Validates that Level will return something
+            addExpereience(0);
         }
 
-        public int Level { get { return CharacterSystem.Level.Level; } }
-        public int Experience { get { return CharacterSystem.Level.Experience; } }
+        public string Name { get { return CharacterSystem.Character.Name; } }
 
-        public int Attack
-        {
-            get
+        public int Level { 
+            get 
             {
-                return CharacterSystem.Stats.Attack + ClassSystem.CharacterClass.Attack + CharacterSystem.Weapon.Attack +
-                    CharacterSystem.Armor.Attack + CharacterSystem.Hat.Attack + CharacterSystem.Shoes.Attack;
+                // Edge cases
+                if (this.Experience >= MaxLevel.Experience) { return MaxLevel.Level; }
+
+                // Standard case
+                SimpleLevel? currentLevel = null;
+                foreach (SimpleLevel level in LevelingSystem.Levels)
+                {
+                    if (this.Experience >= level.Experience)
+                    {
+                        if (currentLevel == null)
+                        {
+                            currentLevel = level;
+                        }
+                        else if (currentLevel.Experience < level.Experience)
+                        {
+                            currentLevel = level;
+                        }
+                    }
+                }
+
+                if (currentLevel == null)
+                {
+                    throw new NullReferenceException($"No level entry for {this.Experience}xp found for {CharacterSystem.Character.Name}");
+                }
+
+                return currentLevel.Level;
             }
         }
 
-        public int Defense
+        public int Experience { get; private set; } = 0;
+
+        public double Attack
         {
             get
             {
-                return CharacterSystem.Stats.Defense + ClassSystem.CharacterClass.Defense + CharacterSystem.Weapon.Defense +
-                    CharacterSystem.Armor.Defense + CharacterSystem.Hat.Defense + CharacterSystem.Shoes.Defense;
+                return Math.Floor(
+                    CharacterSystem.Stats.Attack + ClassSystem.CharacterClass.Attack + 
+                    (Weapon.Attack * WeaponMod) + (Armor.Attack * ArmorMod) + (Hat.Attack * HatMod) + (Shoes.Attack * ShoesMod)
+                );
             }
         }
 
-        public int HealthPoints
+        public double Defense
         {
             get
             {
-                return CharacterSystem.Stats.HitPoints + ClassSystem.CharacterClass.HitPoints + CharacterSystem.Weapon.HitPoints +
-                    CharacterSystem.Armor.HitPoints + CharacterSystem.Hat.HitPoints + CharacterSystem.Shoes.HitPoints;
+                return Math.Floor(CharacterSystem.Stats.Defense +  ClassSystem.CharacterClass.Defense +
+                    (Weapon.Defense * WeaponMod) + (Armor.Defense * ArmorMod) + (Hat.Defense * HatMod) + (Shoes.Defense * ShoesMod)
+                );
             }
         }
 
-        public int Speed
+        public double HitPoints
         {
             get
             {
-                return CharacterSystem.Stats.Speed + ClassSystem.CharacterClass.Speed + CharacterSystem.Weapon.Speed +
-                    CharacterSystem.Armor.Speed + CharacterSystem.Hat.Speed + CharacterSystem.Shoes.Speed;
+                return Math.Floor(CharacterSystem.Stats.HitPoints + ClassSystem.CharacterClass.HitPoints + 
+                    (Weapon.HitPoints * WeaponMod) + (Armor.HitPoints * ArmorMod) + (Hat.HitPoints * HatMod) + (Shoes.HitPoints * ShoesMod));
+            }
+        }
+
+        public double Speed
+        {
+            get
+            {
+                return Math.Floor(CharacterSystem.Stats.Speed + ClassSystem.CharacterClass.Speed + 
+                    (Weapon.Speed * WeaponMod) + (Armor.Speed * ArmorMod) + (Hat.Speed * HatMod) + (Shoes.Speed * ShoesMod));
             }
         }
 
@@ -66,7 +105,7 @@ namespace AdaptiveRPG.Systems.NoMana
             get
             {
                 return ClassSystem.CharacterClassAbilities
-                    .FindAll(a => a.RequiredLevel <= CharacterSystem.Level.Level)
+                    .FindAll(a => a.RequiredLevel <= Level)
                     .ConvertAll(a => SystemManager.Abilities[a.Name]);
             }
         }
@@ -79,27 +118,94 @@ namespace AdaptiveRPG.Systems.NoMana
             }
         }
 
-        private int updateLevel()
+        public NoManaWeapon Weapon { get { return SystemManager.Weapons[CharacterSystem.Weapon]; } }
+        private double WeaponMod { get { return weaponModifier(Weapon); } }
+
+        public NoManaEquipment Armor { get { return SystemManager.Equipment[CharacterSystem.Armor]; } }
+        private double ArmorMod { get { return weightModifier(Armor); } }
+
+        public NoManaEquipment Hat { get { return SystemManager.Equipment[CharacterSystem.Hat]; } }
+        private double HatMod { get { return weightModifier(Hat); } }
+
+        public NoManaEquipment Shoes { get { return SystemManager.Equipment[CharacterSystem.Shoes]; } }
+        private double ShoesMod { get { return weightModifier(Shoes); } }
+
+        /// <summary>
+        /// Add experience to the character
+        /// </summary>
+        /// <param name="exp">Must be a postive integer</param>
+        /// <returns>The number of levels increased from adding the experience</returns>
+        /// <exception cref="ArgumentException"></exception>
+        public int addExpereience(int exp)
         {
-            if (CharacterSystem.Level.Level == MaxLevel)
+            if (exp < 0)
             {
-                return CharacterSystem.Level.Level;
+                throw new ArgumentException($"Cannot add experience for {CharacterSystem.Character.Name}, exp ({exp}) must be a postive value.");
             }
 
-            SimpleLevel? nextLevel = LevelingSystem.Levels.Find((a) => a.Level == CharacterSystem.Level.Level + 1);
-
-            if (nextLevel == null)
-            {
-                throw new NullReferenceException($"No entry for level {CharacterSystem.Level.Level + 1} found for {CharacterSystem.Character.Name}");
-            }
-
-            return CharacterSystem.Level.Level = nextLevel.Level;
+            int currentLevel = Level;
+            Experience += exp;
+            return Level - currentLevel;
         }
 
-        public int addExperience(int experience)
+        /// <summary>
+        /// Change the current character equipment to the passed in piece.
+        /// </summary>
+        /// <param name="piece"></param>
+        /// <exception cref="ArgumentException"></exception>
+        public void equip(NoManaEquipment piece)
         {
-            CharacterSystem.Level.Experience += experience;
-            return updateLevel();
+            if (piece.EquipmentType == EquipmentConst.TYPESET_1.weapon)
+            {
+                CharacterSystem.Weapon = piece.Name;
+            }
+            else if (piece.EquipmentType == EquipmentConst.TYPESET_1.hat)
+            {
+                CharacterSystem.Hat = piece.Name;
+            }
+            else if (piece.EquipmentType == EquipmentConst.TYPESET_1.shoes)
+            {
+                CharacterSystem.Shoes = piece.Name;
+            }
+            else if (piece.EquipmentType == EquipmentConst.TYPESET_1.armor)
+            {
+                CharacterSystem.Armor = piece.Name;
+            }
+            else
+            {
+                throw new ArgumentException($"Equiment piece is of an unknown type ({piece.EquipmentType}) and could not be equiped");
+            }
+        }
+
+        /// <summary>
+        /// Get the modifier for a peice of equipment based on class modifiers for wieght
+        /// </summary>
+        /// <param name="piece"></param>
+        /// <returns></returns>
+        private double weightModifier(NoManaEquipment piece)
+        {
+            EquipmentWeightModifier? mod = ClassSystem.EquimentWeightModifiers.Find(mod => mod.Weight == piece.EquipmentWeight);
+            if (mod != null) 
+            { 
+                return mod.Modifier;
+            }
+            return 1.0;
+        }
+
+        /// <summary>
+        /// Get the modifier for a weapon based on the class modifiers for weight and weapon type
+        /// </summary>
+        /// <param name="weapon"></param>
+        /// <returns></returns>
+        private double weaponModifier(NoManaWeapon weapon)
+        {
+            WeaponTypeModifier? waeponMod = ClassSystem.WeaponTypeModifiers.Find(mod => mod.Type == weapon.EquipmentWeaponSet);
+            double weightMod = weightModifier(weapon);
+            if (waeponMod != null)
+            {
+                return waeponMod.Modifier * weightMod;
+            }
+            return weightMod;
         }
 
     }

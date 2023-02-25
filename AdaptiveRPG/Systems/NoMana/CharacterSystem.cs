@@ -13,11 +13,10 @@ namespace AdaptiveRPG.Systems.NoMana
 
         public SimpleCharacter? Character { get; set; }
         public NoManaStats? Stats { get; set; }
-        public SimpleLevel? Level { get; set; }
-        public NoManaWeapon? Weapon { get; set; }
-        public NoManaEquipment? Armor { get; set; }
-        public NoManaEquipment? Hat { get; set; }
-        public NoManaEquipment? Shoes { get; set; }
+        public string? Weapon { get; set; }
+        public string? Armor { get; set; }
+        public string? Hat { get; set; }
+        public string? Shoes { get; set; }
     }
 
 }

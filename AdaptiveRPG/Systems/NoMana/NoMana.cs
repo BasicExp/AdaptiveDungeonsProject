@@ -1,4 +1,5 @@
 ﻿using AdaptiveRPG.Character.Components.Abilities;
+using AdaptiveRPG.Character.Components.Equipment;
 using System.Xml.Serialization;
 
 namespace AdaptiveRPG.Systems.NoMana
@@ -19,5 +20,12 @@ namespace AdaptiveRPG.Systems.NoMana
         [XmlArray("Leveling")]
         [XmlArrayItem("System")]
         public List<LevelingSystem> LevelingSystems { get; set; }
+
+        [XmlArrayItem("EquipmentPiece")]
+        public List<NoManaEquipment> Equipment { get; set; }
+
+        [XmlArrayItem("Weapon")]
+        public List<NoManaWeapon> Weapons { get; set; }
+
     }
 }

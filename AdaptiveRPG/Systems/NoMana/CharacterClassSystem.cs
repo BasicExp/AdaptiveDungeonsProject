@@ -1,4 +1,5 @@
 ﻿using AdaptiveRPG.Character.Components.CharacterClasses;
+using AdaptiveRPG.Character.Components.Equipment;
 using System.Xml.Serialization;
 
 namespace AdaptiveRPG.Systems.NoMana
@@ -15,6 +16,19 @@ namespace AdaptiveRPG.Systems.NoMana
         public string? Name { get; set; }
     }
 
+    public class EquipmentWeightModifier
+    {
+        public EquipmentConst.WEIGHT Weight { get; set; }
+        public double Modifier { get; set; }
+    }
+
+    public class WeaponTypeModifier
+    {
+        public EquipmentConst.WEAPONSET_1 Type { get; set; }
+        public double Modifier { get; set; }
+    }
+
+
     public class CharacterClassSystem
     {
         [XmlElement("Class")]
@@ -27,5 +41,11 @@ namespace AdaptiveRPG.Systems.NoMana
         [XmlArray("Upgrades")]
         [XmlArrayItem("Class")]
         public List<CharacterClassUpgrade>? ChararcterClassUpgrades { get; set; }
+
+        [XmlArrayItem("Modifier")]
+        public List<EquipmentWeightModifier> EquimentWeightModifiers { get; set; }
+
+        [XmlArrayItem("Modifier")]
+        public List<WeaponTypeModifier> WeaponTypeModifiers { get; set; }
     }
 }
