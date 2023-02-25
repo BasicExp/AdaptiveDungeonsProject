@@ -1,8 +1,5 @@
 ﻿using AdaptiveRPG.Character;
-using AdaptiveRPG.Character.Components.Equipment;
-using AdaptiveRPG.Character.Components.Leveling;
 using AdaptiveRPG.Character.Components.Stats;
-using System.Xml.Serialization;
 
 namespace AdaptiveRPG.Systems.NoMana
 {

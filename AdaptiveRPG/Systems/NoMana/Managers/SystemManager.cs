@@ -6,7 +6,6 @@ using AdaptiveRPG.Character.Components.Leveling;
 using AdaptiveRPG.Character.Components.Stats;
 using AdaptiveRPG.Combat;
 using AdaptiveRPG.Systems.Util;
-using AdaptiveRPG.Combat.Components.AI;
 
 namespace AdaptiveRPG.Systems.NoMana
 {

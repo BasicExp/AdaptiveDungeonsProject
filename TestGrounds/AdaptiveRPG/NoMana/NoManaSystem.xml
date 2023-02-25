@@ -230,8 +230,8 @@
       <EquipmentWeaponSet>sword</EquipmentWeaponSet>
     </Weapon>
   </Weapons>
-  <EnemySystems>
-    <EnemySystem>
+  <Enemies>
+    <System>
       <Enemy>
         <Name>Enemy 1</Name>
         <Description>Enemy 1 descrition</Description>
@@ -247,8 +247,8 @@
         <Ability>ab1</Ability>
         <Ability>ab2</Ability>
       </Abilities>
-    </EnemySystem>
-    <EnemySystem>
+    </System>
+    <System>
       <Enemy>
         <Name>Enemy 2</Name>
         <Description>Enemy 2 descrition</Description>
@@ -263,6 +263,6 @@
       <Abilities>
         <Ability>ab1</Ability>
       </Abilities>
-    </EnemySystem>
-  </EnemySystems>
+    </System>
+  </Enemies>
 </NoManaSystem>

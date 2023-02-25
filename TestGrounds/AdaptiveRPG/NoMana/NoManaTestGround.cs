@@ -33,6 +33,9 @@ namespace TestGrounds.AdaptiveRPG.NoMana
 
             // Test persisting state
             system.save("NoManaSystemUpdated.xml");
+
+            // Testing Combat System
+            // TODO
         }
     }
 }

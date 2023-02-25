@@ -27,6 +27,8 @@ namespace AdaptiveRPG.Systems.NoMana
         [XmlArrayItem("Weapon")]
         public List<NoManaWeapon> Weapons { get; set; }
 
+        [XmlArray("Enemies")]
+        [XmlArrayItem("System")]
         public List<EnemySystem> EnemySystems { get; set; }
 
     }
