@@ -10,6 +10,7 @@ namespace AdaptiveRPG.Systems.NoMana
     {
         public string? CharacterClassSystem { get; set; }
         public string? LevelingSystem { get; set; }
+        public int Experience { get; set; }
 
         public SimpleCharacter? Character { get; set; }
         public NoManaStats? Stats { get; set; }

@@ -26,18 +26,19 @@ namespace AdaptiveRPG.Systems.NoMana
         }
 
         public string Name { get { return CharacterSystem.Character.Name; } }
+        public int Experience { get { return CharacterSystem.Experience; } }
 
         public int Level { 
             get 
             {
                 // Edge cases
-                if (this.Experience >= MaxLevel.Experience) { return MaxLevel.Level; }
+                if (this.CharacterSystem.Experience >= MaxLevel.Experience) { return MaxLevel.Level; }
 
                 // Standard case
                 SimpleLevel? currentLevel = null;
                 foreach (SimpleLevel level in LevelingSystem.Levels)
                 {
-                    if (this.Experience >= level.Experience)
+                    if (this.CharacterSystem.Experience >= level.Experience)
                     {
                         if (currentLevel == null)
                         {
@@ -52,14 +53,12 @@ namespace AdaptiveRPG.Systems.NoMana
 
                 if (currentLevel == null)
                 {
-                    throw new NullReferenceException($"No level entry for {this.Experience}xp found for {CharacterSystem.Character.Name}");
+                    throw new NullReferenceException($"No level entry for {this.CharacterSystem.Experience}xp found for {CharacterSystem.Character.Name}");
                 }
 
                 return currentLevel.Level;
             }
         }
-
-        public int Experience { get; private set; } = 0;
 
         public double Attack
         {
@@ -144,7 +143,7 @@ namespace AdaptiveRPG.Systems.NoMana
             }
 
             int currentLevel = Level;
-            Experience += exp;
+            CharacterSystem.Experience += exp;
             return Level - currentLevel;
         }
 

@@ -42,6 +42,18 @@
           <Name>CharacterClass2</Name>
         </Class>
       </Upgrades>
+      <EquimentWeightModifiers>
+        <Modifier>
+          <Weight>medium</Weight>
+          <Modifier>1.1</Modifier>
+        </Modifier>
+      </EquimentWeightModifiers>
+      <WeaponTypeModifiers>
+        <Modifier>
+          <Type>sword</Type>
+          <Modifier>1.2</Modifier>
+        </Modifier>
+      </WeaponTypeModifiers>
     </System>
     <System>
       <Class>
@@ -62,12 +74,25 @@
           <Name>ab2</Name>
         </Ability>
       </Abilities>
+      <EquimentWeightModifiers>
+        <Modifier>
+          <Weight>medium</Weight>
+          <Modifier>1.1</Modifier>
+        </Modifier>
+      </EquimentWeightModifiers>
+      <WeaponTypeModifiers>
+        <Modifier>
+          <Type>sword</Type>
+          <Modifier>1.2</Modifier>
+        </Modifier>
+      </WeaponTypeModifiers>
     </System>
   </Classes>
   <Characters>
     <System>
       <CharacterClassSystem>CharacterClass1</CharacterClassSystem>
       <LevelingSystem>LevelSystem1</LevelingSystem>
+      <Experience>0</Experience>
       <Character>
         <UniqueId>MainCharacter1</UniqueId>
         <Name>Character1</Name>
@@ -87,6 +112,7 @@
     <System>
       <CharacterClassSystem>CharacterClass1</CharacterClassSystem>
       <LevelingSystem>LevelSystem1</LevelingSystem>
+      <Experience>0</Experience>
       <Character>
         <UniqueId>MainCharacter2</UniqueId>
         <Name>Character2</Name>
@@ -106,6 +132,7 @@
     <System>
       <CharacterClassSystem>CharacterClass1</CharacterClassSystem>
       <LevelingSystem>LevelSystem1</LevelingSystem>
+      <Experience>0</Experience>
       <Character>
         <UniqueId>MainCharacter3</UniqueId>
         <Name>Character3</Name>
@@ -188,6 +215,18 @@
       <Speed>10</Speed>
       <Attack>10</Attack>
       <Defense>10</Defense>
+      <EquipmentWeaponSet>sword</EquipmentWeaponSet>
+    </Weapon>
+    <Weapon>
+      <EquipmentWeight>medium</EquipmentWeight>
+      <EquipmentType>weapon</EquipmentType>
+      <Name>Weapon 2</Name>
+      <Description>Weapon 2 description</Description>
+      <Level>0</Level>
+      <HitPoints>11</HitPoints>
+      <Speed>11</Speed>
+      <Attack>11</Attack>
+      <Defense>11</Defense>
       <EquipmentWeaponSet>sword</EquipmentWeaponSet>
     </Weapon>
   </Weapons>
