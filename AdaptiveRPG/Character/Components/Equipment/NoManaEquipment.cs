@@ -1,9 +1,11 @@
-﻿namespace AdaptiveRPG.Character.Components.Equipment
+﻿using System.Xml.Serialization;
+
+namespace AdaptiveRPG.Character.Components.Equipment
 {
     public class NoManaEquipment
     {
-        public EquipmentConst.WEIGHT EquipmentWeight { get; set; }
-        public EquipmentConst.TYPESET_1 EquipmentType { get; set; }
+        public EquipmentConst.EQUIPMENT_WEIGHTS_1 EquipmentWeight { get; set; }
+        public EquipmentConst.EQUIPMENT_TYPESET_1 EquipmentType { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public int Level { get; set; }
@@ -16,10 +18,10 @@
 
     public class NoManaWeapon : NoManaEquipment
     {
-        public EquipmentConst.WEAPONSET_1 EquipmentWeaponSet { get; set;}
+        public EquipmentConst.EQUIPMENT_WEAPONSET_1 EquipmentWeaponSet { get; set;}
         
         public NoManaWeapon() {
-            EquipmentType = EquipmentConst.TYPESET_1.weapon;
+            EquipmentType = EquipmentConst.EQUIPMENT_TYPESET_1.weapon;
         }
     }
 }

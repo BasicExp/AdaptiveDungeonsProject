@@ -2,8 +2,8 @@
 {
     public class EquipmentConst
     {
-        public enum WEIGHT { heavy, medium, light }
-        public enum TYPESET_1 { weapon, armor, hat, shoes }
-        public enum WEAPONSET_1 { sword, axe, staff, bow, }
+        public enum EQUIPMENT_WEIGHTS_1 { heavy, medium, light }
+        public enum EQUIPMENT_TYPESET_1 { weapon, armor, hat, shoes }
+        public enum EQUIPMENT_WEAPONSET_1 { sword, axe, staff, bow, }
     }
 }

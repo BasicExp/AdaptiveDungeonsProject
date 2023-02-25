@@ -6,7 +6,7 @@
     /// </summary>
     public class AbilityConst
     {
-        public enum TARGET_TYPE { allies, enemies, enemy, self }
-        public enum EFFECT_TYPE { heal, damage, buff, debuff }
+        public enum ABILITY_TARGET_TYPESET_1 { allies, enemies, enemy, self }
+        public enum ABILITY_EFFECT_TYPESET_1 { heal, damage, buff, debuff }
     }
 }

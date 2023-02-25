@@ -18,13 +18,13 @@ namespace AdaptiveRPG.Systems.NoMana
 
     public class EquipmentWeightModifier
     {
-        public EquipmentConst.WEIGHT Weight { get; set; }
+        public EquipmentConst.EQUIPMENT_WEIGHTS_1 Weight { get; set; }
         public double Modifier { get; set; }
     }
 
     public class WeaponTypeModifier
     {
-        public EquipmentConst.WEAPONSET_1 Type { get; set; }
+        public EquipmentConst.EQUIPMENT_WEAPONSET_1 Type { get; set; }
         public double Modifier { get; set; }
     }
 

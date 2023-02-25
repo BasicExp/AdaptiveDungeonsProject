@@ -230,4 +230,39 @@
       <EquipmentWeaponSet>sword</EquipmentWeaponSet>
     </Weapon>
   </Weapons>
+  <EnemySystems>
+    <EnemySystem>
+      <Enemy>
+        <Name>Enemy 1</Name>
+        <Description>Enemy 1 descrition</Description>
+      </Enemy>
+      <Stats>
+        <HitPoints>5</HitPoints>
+        <Speed>5</Speed>
+        <Attack>5</Attack>
+        <Defense>5</Defense>
+      </Stats>
+      <AIType>random</AIType>
+      <Abilities>
+        <Ability>ab1</Ability>
+        <Ability>ab2</Ability>
+      </Abilities>
+    </EnemySystem>
+    <EnemySystem>
+      <Enemy>
+        <Name>Enemy 2</Name>
+        <Description>Enemy 2 descrition</Description>
+      </Enemy>
+      <Stats>
+        <HitPoints>4</HitPoints>
+        <Speed>4</Speed>
+        <Attack>4</Attack>
+        <Defense>4</Defense>
+      </Stats>
+      <AIType>grudge</AIType>
+      <Abilities>
+        <Ability>ab1</Ability>
+      </Abilities>
+    </EnemySystem>
+  </EnemySystems>
 </NoManaSystem>

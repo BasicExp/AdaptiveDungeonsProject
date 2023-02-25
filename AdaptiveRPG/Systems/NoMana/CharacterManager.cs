@@ -154,19 +154,19 @@ namespace AdaptiveRPG.Systems.NoMana
         /// <exception cref="ArgumentException"></exception>
         public void equip(NoManaEquipment piece)
         {
-            if (piece.EquipmentType == EquipmentConst.TYPESET_1.weapon)
+            if (piece.EquipmentType == EquipmentConst.EQUIPMENT_TYPESET_1.weapon)
             {
                 CharacterSystem.Weapon = piece.Name;
             }
-            else if (piece.EquipmentType == EquipmentConst.TYPESET_1.hat)
+            else if (piece.EquipmentType == EquipmentConst.EQUIPMENT_TYPESET_1.hat)
             {
                 CharacterSystem.Hat = piece.Name;
             }
-            else if (piece.EquipmentType == EquipmentConst.TYPESET_1.shoes)
+            else if (piece.EquipmentType == EquipmentConst.EQUIPMENT_TYPESET_1.shoes)
             {
                 CharacterSystem.Shoes = piece.Name;
             }
-            else if (piece.EquipmentType == EquipmentConst.TYPESET_1.armor)
+            else if (piece.EquipmentType == EquipmentConst.EQUIPMENT_TYPESET_1.armor)
             {
                 CharacterSystem.Armor = piece.Name;
             }

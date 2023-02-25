@@ -4,7 +4,9 @@ using AdaptiveRPG.Character.Components.CharacterClasses;
 using AdaptiveRPG.Character.Components.Equipment;
 using AdaptiveRPG.Character.Components.Leveling;
 using AdaptiveRPG.Character.Components.Stats;
+using AdaptiveRPG.Combat;
 using AdaptiveRPG.Systems.Util;
+using AdaptiveRPG.Combat.Components.AI;
 
 namespace AdaptiveRPG.Systems.NoMana
 {
@@ -18,6 +20,8 @@ namespace AdaptiveRPG.Systems.NoMana
         public readonly Dictionary<string, NoManaAbility> Abilities;
         public readonly Dictionary<string, NoManaEquipment> Equipment;
         public readonly Dictionary<string, NoManaWeapon> Weapons;
+
+        public readonly Dictionary<string, EnemySystem> EnemySystems;
         public readonly Dictionary<string, CharacterClassSystem> CharacterClassSystems;
         public readonly Dictionary<string, CharacterSystem> CharacterSystems;
         public readonly Dictionary<string, LevelingSystem> LevelingSystems;
@@ -26,29 +30,45 @@ namespace AdaptiveRPG.Systems.NoMana
 
         public SystemManager(NoManaSystem noManaSystem)
         {
+            this.noManaSystem = noManaSystem;
+
+            // Raw Object Lists
             Abilities = new Dictionary<string, NoManaAbility>();
             Equipment = new Dictionary<string, NoManaEquipment>();
             Weapons = new Dictionary<string, NoManaWeapon>();
-            CharacterClassSystems = new Dictionary<string, CharacterClassSystem>();
-            CharacterSystems = new Dictionary<string, CharacterSystem>();
-            LevelingSystems = new Dictionary<string, LevelingSystem>();
 
             noManaSystem.Abilities.ForEach(a => { Abilities.Add(a.Name, a); });
             noManaSystem.Equipment.ForEach(e => { Equipment.Add(e.Name, e); });
             noManaSystem.Weapons.ForEach(w => { Weapons.Add(w.Name, w); });
+
+            // System Lists
+            CharacterClassSystems = new Dictionary<string, CharacterClassSystem>();
+            CharacterSystems = new Dictionary<string, CharacterSystem>();
+            LevelingSystems = new Dictionary<string, LevelingSystem>();
+            EnemySystems = new Dictionary<string, EnemySystem>();
+
             noManaSystem.CharacterClassSystems.ForEach(ccs => { CharacterClassSystems.Add(ccs.CharacterClass.Name, ccs); });
             noManaSystem.CharacterSystems.ForEach(cs => { CharacterSystems.Add(cs.Character.UniqueId, cs); });
             noManaSystem.LevelingSystems.ForEach(ls => { LevelingSystems.Add(ls.Name, ls); });
+            noManaSystem.EnemySystems.ForEach(e => { EnemySystems.Add(e.Enemy.Name, e); });
 
-            this.noManaSystem = noManaSystem;
         }
-
+        
+        /// <summary>
+        /// Save the current state of the system to an XML file at the passed in path
+        /// </summary>
+        /// <param name="path"></param>
         public void save(string path)
         {
             SystemLoader<NoManaSystem> loader = new SystemLoader<NoManaSystem>();
             loader.Write(path, noManaSystem);
         }
 
+        /// <summary>
+        /// Load a system state from an XML file at the passed in path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static SystemManager LoadFromFile(string path)
         {
             SystemLoader<NoManaSystem> loader = new SystemLoader<NoManaSystem>();
@@ -56,6 +76,11 @@ namespace AdaptiveRPG.Systems.NoMana
             return new SystemManager(result);
         }
 
+        /// <summary>
+        /// Returns a sample version of the NoMana system that you can use to quickly
+        /// interact with.
+        /// </summary>
+        /// <returns></returns>
         public static NoManaSystem CreateSampleSystem()
         {
             // Used for each character
@@ -83,13 +108,13 @@ namespace AdaptiveRPG.Systems.NoMana
             ab1.Name = "ab1";
             ab1.CastTime = 0;
             ab1.Description = "ab1 descrption";
-            ab1.EffectType = AbilityConst.EFFECT_TYPE.damage;
+            ab1.EffectType = Character.Components.Abilities.AbilityConst.ABILITY_EFFECT_TYPESET_1.damage;
 
             NoManaAbility ab2 = new NoManaAbility();
             ab2.Name = "ab2";
             ab2.CastTime = 0;
             ab2.Description = "ab1 descrption";
-            ab2.EffectType = AbilityConst.EFFECT_TYPE.heal;
+            ab2.EffectType = Character.Components.Abilities.AbilityConst.ABILITY_EFFECT_TYPESET_1.heal;
 
             CharacterClassAbility ccab1 = new CharacterClassAbility();
             ccab1.RequiredLevel = 10;
@@ -103,8 +128,8 @@ namespace AdaptiveRPG.Systems.NoMana
             NoManaWeapon weapon1 = new NoManaWeapon();
             weapon1.Name = "Weapon 1";
             weapon1.Description = "Weapon 1 description";
-            weapon1.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            weapon1.EquipmentWeaponSet = EquipmentConst.WEAPONSET_1.sword;
+            weapon1.EquipmentWeight = Character.Components.Equipment.EquipmentConst.EQUIPMENT_WEIGHTS_1.medium;
+            weapon1.EquipmentWeaponSet = Character.Components.Equipment.EquipmentConst.EQUIPMENT_WEAPONSET_1.sword;
             weapon1.HitPoints = 10;
             weapon1.Speed = 10;
             weapon1.Attack = 10;
@@ -112,8 +137,8 @@ namespace AdaptiveRPG.Systems.NoMana
             NoManaWeapon weapon2 = new NoManaWeapon();
             weapon2.Name = "Weapon 2";
             weapon2.Description = "Weapon 2 description";
-            weapon2.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            weapon2.EquipmentWeaponSet = EquipmentConst.WEAPONSET_1.sword;
+            weapon2.EquipmentWeight = Character.Components.Equipment.EquipmentConst.EQUIPMENT_WEIGHTS_1.medium;
+            weapon2.EquipmentWeaponSet = Character.Components.Equipment.EquipmentConst.EQUIPMENT_WEAPONSET_1.sword;
             weapon2.HitPoints = 11;
             weapon2.Speed = 11;
             weapon2.Attack = 11;
@@ -121,8 +146,8 @@ namespace AdaptiveRPG.Systems.NoMana
             NoManaEquipment armor1 = new NoManaEquipment();
             armor1.Name = "Armor 1";
             armor1.Description = "Arnor 1 description";
-            armor1.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            armor1.EquipmentType = EquipmentConst.TYPESET_1.armor;
+            armor1.EquipmentWeight = Character.Components.Equipment.EquipmentConst.EQUIPMENT_WEIGHTS_1.medium;
+            armor1.EquipmentType = Character.Components.Equipment.EquipmentConst.EQUIPMENT_TYPESET_1.armor;
             armor1.HitPoints = 10;
             armor1.Speed = 10;
             armor1.Attack = 10;
@@ -130,8 +155,8 @@ namespace AdaptiveRPG.Systems.NoMana
             NoManaEquipment hat1 = new NoManaEquipment();
             hat1.Name = "Hat 1";
             hat1.Description = "Hat 1 description";
-            hat1.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            hat1.EquipmentType = EquipmentConst.TYPESET_1.hat;
+            hat1.EquipmentWeight = Character.Components.Equipment.EquipmentConst.EQUIPMENT_WEIGHTS_1.medium;
+            hat1.EquipmentType = Character.Components.Equipment.EquipmentConst.EQUIPMENT_TYPESET_1.hat;
             hat1.HitPoints = 10;
             hat1.Speed = 10;
             hat1.Attack = 10;
@@ -139,19 +164,19 @@ namespace AdaptiveRPG.Systems.NoMana
             NoManaEquipment shoes1 = new NoManaEquipment();
             shoes1.Name = "Shoes 1";
             shoes1.Description = "Shoes 1 description";
-            shoes1.EquipmentWeight = EquipmentConst.WEIGHT.medium;
-            shoes1.EquipmentType = EquipmentConst.TYPESET_1.shoes;
+            shoes1.EquipmentWeight = Character.Components.Equipment.EquipmentConst.EQUIPMENT_WEIGHTS_1.medium;
+            shoes1.EquipmentType = Character.Components.Equipment.EquipmentConst.EQUIPMENT_TYPESET_1.shoes;
             shoes1.HitPoints = 10;
             shoes1.Speed = 10;
             shoes1.Attack = 10;
 
             // Equipment Mods
             EquipmentWeightModifier equipMod1 = new EquipmentWeightModifier();
-            equipMod1.Weight = EquipmentConst.WEIGHT.medium;
+            equipMod1.Weight = Character.Components.Equipment.EquipmentConst.EQUIPMENT_WEIGHTS_1.medium;
             equipMod1.Modifier = 1.1;
 
             WeaponTypeModifier wpMod1 = new WeaponTypeModifier();
-            wpMod1.Type = EquipmentConst.WEAPONSET_1.sword;
+            wpMod1.Type = Character.Components.Equipment.EquipmentConst.EQUIPMENT_WEAPONSET_1.sword;
             wpMod1.Modifier = 1.2;
 
             // Class stuff
@@ -199,7 +224,6 @@ namespace AdaptiveRPG.Systems.NoMana
             cs1.Hat = "Hat 1";
             cs1.Shoes = "Shoes 1";
 
-
             CharacterSystem cs2 = new CharacterSystem();
             cs2.LevelingSystem = lvling1.Name;
             cs2.Character = new SimpleCharacter();
@@ -221,7 +245,6 @@ namespace AdaptiveRPG.Systems.NoMana
             cs2.Armor = "Armor 1";
             cs2.Hat = "Hat 1";
             cs2.Shoes = "Shoes 1";
-
 
             CharacterSystem cs3 = new CharacterSystem();
             cs3.LevelingSystem = lvling1.Name;
@@ -245,6 +268,32 @@ namespace AdaptiveRPG.Systems.NoMana
             cs3.Hat = "Hat 1";
             cs3.Shoes = "Shoes 1";
 
+            // Enemies
+            EnemySystem enemy1 = new EnemySystem();
+            enemy1.AIType = Combat.Components.AI.AIConst.AI_TYPESET_1.random;
+            enemy1.Enemy = new SimpleEnemy();
+            enemy1.Enemy.Name = "Enemy 1";
+            enemy1.Enemy.Description = "Enemy 1 descrition";
+            enemy1.Stats = new NoManaStats();
+            enemy1.Stats.HitPoints = 5;
+            enemy1.Stats.Speed = 5;
+            enemy1.Stats.Attack = 5;
+            enemy1.Stats.Defense = 5;
+            enemy1.Abilities = new List<string> { ab1.Name, ab2.Name };
+
+            EnemySystem enemy2 = new EnemySystem();
+            enemy2.AIType = Combat.Components.AI.AIConst.AI_TYPESET_1.grudge;
+            enemy2.Enemy = new SimpleEnemy();
+            enemy2.Enemy.Name = "Enemy 2";
+            enemy2.Enemy.Description = "Enemy 2 descrition";
+            enemy2.Stats = new NoManaStats();
+            enemy2.Stats.HitPoints = 4;
+            enemy2.Stats.Speed = 4;
+            enemy2.Stats.Attack = 4;
+            enemy2.Stats.Defense = 4;
+            enemy2.Abilities = new List<string> { ab1.Name };
+
+            // System Creation
             NoManaSystem noMana = new NoManaSystem();
             noMana.Abilities = new List<NoManaAbility> { ab1, ab2 };
             noMana.Weapons = new List<NoManaWeapon> { weapon1, weapon2 };
@@ -252,6 +301,7 @@ namespace AdaptiveRPG.Systems.NoMana
             noMana.CharacterClassSystems = new List<CharacterClassSystem> { ccs1, ccs2 };
             noMana.CharacterSystems = new List<CharacterSystem> { cs1, cs2, cs3 };
             noMana.LevelingSystems = new List<LevelingSystem> { lvling1 };
+            noMana.EnemySystems = new List<EnemySystem> { enemy1, enemy2 };
 
             return noMana;
         }
